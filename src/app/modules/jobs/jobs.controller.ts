@@ -34,14 +34,21 @@ export const getJobById: RequestHandler = async (req, res) => {
 
 // POST /api/jobs  it only access by admin
 export const createJob: RequestHandler = async (req, res) => {
-  const { title, company, location, category, description } = req.body;
-  if (!title || !company || !location || !category || !description) {
+  const {  title,
+    company,
+    location,
+    category,
+    salary,
+    job_type,
+    company_logo,
+    description } = req.body;
+  if (!title || !company || !location || !category || !salary || !job_type || !company_logo || !description) {
     res.status(400).json({ error: 'Missing required fields' });
     return;
   }
 
   try {
-    const job = new Job({ title, company, location, category, description });
+    const job = new Job({ title, company, location, category, salary, job_type, company_logo, description });
     await job.save();
     res.status(201).json(job);
   } catch (err) {
